@@ -11,6 +11,7 @@ public class ControlShakeSetter : MonoBehaviour
 
     private void Reset()
     {
+        //Récupère le control shake sur lui-même(il le trouve dans ses components)
         _controlShake = GetComponent<ControlShake>();
     }
 
