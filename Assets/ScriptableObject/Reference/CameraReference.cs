@@ -5,5 +5,4 @@ using UnityEngine;
 [CreateAssetMenu(menuName ="Reference/Camera")]
 public class CameraReference : Reference<Camera>
 {
-    
 }

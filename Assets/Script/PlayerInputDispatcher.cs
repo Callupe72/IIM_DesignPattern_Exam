@@ -17,6 +17,10 @@ public class PlayerInputDispatcher : MonoBehaviour
 
     Coroutine MovementTracking { get; set; }
 
+    //Ajout du nouveau support
+    [SerializeField] InputActionReference _shieldButton;
+    [SerializeField] Health _health;
+
     Vector3 ScreenPositionToWorldPosition(Camera c, Vector2 cursorPosition) => _mainCamera.ScreenToWorldPoint(cursorPosition);
 
     private void Start()
@@ -26,6 +30,12 @@ public class PlayerInputDispatcher : MonoBehaviour
 
         _moveJoystick.action.started += MoveInput;
         _moveJoystick.action.canceled += MoveInputCancel;
+
+        //Ajout de l'action à la liste
+        //----> Started récupère l'input lors de sa pression
+        _shieldButton.action.started += HasShield;
+        //----> Canceled récupère l'input lorsque la touche est relevée
+        _shieldButton.action.canceled += HasShield;
     }
 
     private void OnDestroy()
@@ -34,6 +44,22 @@ public class PlayerInputDispatcher : MonoBehaviour
 
         _moveJoystick.action.started -= MoveInput;
         _moveJoystick.action.canceled -= MoveInputCancel;
+
+        //Suppression de l'action de la liste
+        _shieldButton.action.started -= HasShield;
+        _shieldButton.action.canceled -= HasShield;
+    }
+
+
+    //Cette fonction est appelée lorsque : 
+        //  -shieldButton est pressé
+        //  -shield button est relaché
+        //  Ensuite Unity regarde si la touche est pressée ou non. Cela permet de ne pas avoir une fonction
+        //  "OnShieldPressed" et une autre "OnShieldReleased"
+    private void HasShield(InputAction.CallbackContext obj)
+    {
+        _health.SetShieldActive(obj.ReadValueAsButton());
+        _fire.SetShieldActive(obj.ReadValueAsButton());
     }
 
     private void MoveInput(InputAction.CallbackContext obj)

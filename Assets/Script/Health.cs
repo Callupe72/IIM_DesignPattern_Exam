@@ -5,12 +5,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Health : MonoBehaviour, IHealth
+public class Health : MonoBehaviour, IHealth, ITouchable
 {
     // Champs
     [SerializeField] int _startHealth;
     [SerializeField] int _maxHealth;
     [SerializeField] UnityEvent _onDeath;
+    
+    //Création d'un boolean qui récupère l'état du shield
+    bool isShieldActive;
+    public void SetShieldActive(bool shieldActive)
+    {
+        isShieldActive = shieldActive;
+    }
 
     // Propriétés
     public int CurrentHealth { get; private set; }
@@ -25,6 +32,10 @@ public class Health : MonoBehaviour, IHealth
     // Methods
     void Awake() => Init();
 
+
+    //Création d'un event qui sera appelé à chaque fois que la vie s'actualise (pour le slider entre autres)
+    public event UnityAction OnChangeHealth;
+
     void Init()
     {
         CurrentHealth = _startHealth;
@@ -33,6 +44,9 @@ public class Health : MonoBehaviour, IHealth
 
     public void TakeDamage(int amount)
     {
+        if (isShieldActive)
+            return;
+
         if (amount < 0) throw new ArgumentException($"Argument amount {nameof(amount)} is negativ");
 
         var tmp = CurrentHealth;
@@ -45,6 +59,20 @@ public class Health : MonoBehaviour, IHealth
             _onDeath?.Invoke();
         }
 
+        //L'event est appelé pour le slider
+        OnChangeHealth?.Invoke();
+    }
+
+
+    //Création d'une nouvelle fonction qui permet de heal le player
+    public void Heal(int amount)
+    {
+        if (amount < 0) throw new ArgumentException($"Argument amount {nameof(amount)} is negativ");
+        var tmp = CurrentHealth;
+        CurrentHealth = Mathf.Min(MaxHealth, CurrentHealth + amount);
+
+        //L'event est appelé pour le slider
+        OnChangeHealth?.Invoke();
     }
 
     [Button("test")]
@@ -86,8 +114,8 @@ public class Health : MonoBehaviour, IHealth
         yield break;
     }
 
-
-
-
-
+    public void Touch(int power)
+    {
+        TakeDamage(power);
+    }
 }

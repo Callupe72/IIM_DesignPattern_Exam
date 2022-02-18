@@ -123,6 +123,8 @@ MonoBehaviour:
   _pointerPosition: {fileID: -783169567023109517, guid: edb876c493db3cc41bcfd505340de7ef, type: 3}
   _moveJoystick: {fileID: 1202087846194337127, guid: edb876c493db3cc41bcfd505340de7ef, type: 3}
   _fireButton: {fileID: 1288914843486402132, guid: edb876c493db3cc41bcfd505340de7ef, type: 3}
+  _shieldButton: {fileID: 447297868410751600, guid: edb876c493db3cc41bcfd505340de7ef, type: 3}
+  _health: {fileID: 0}
 --- !u!1 &2718515491814373226
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,6 +372,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8718385489110254335}
   - component: {fileID: 3916804375536699047}
+  - component: {fileID: 3431872058437610696}
   m_Layer: 0
   m_Name: ObjectTrigger
   m_TagString: Untagged
@@ -417,6 +420,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.9410648, y: 2.2955625}
   m_EdgeRadius: 0
+--- !u!114 &3431872058437610696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4656551847328665815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2d726ba9781ca54db8b41eace61a7f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4719610752975132196
 GameObject:
   m_ObjectHideFlags: 0
@@ -642,6 +657,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnPoint: {fileID: 7257506456246402187}
   _bulletPrefab: {fileID: 6056709005347279180, guid: 01834f7a3e0c2fb448d9d118fcdbd49c, type: 3}
+  bulletPooling: {fileID: 0}
 --- !u!114 &2103652747003793891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -793,6 +809,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: {fileID: 1657962468365373699}
+  _shakeRef: {fileID: 11400000, guid: 0ffc3cec2118d6b4b9fb9e77dc30d5f3, type: 2}
 --- !u!114 &7570379441199668059
 MonoBehaviour:
   m_ObjectHideFlags: 0
